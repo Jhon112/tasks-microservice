@@ -1,0 +1,28 @@
+version: "2"
+
+volumes:
+  db-data:
+    external: false
+
+services:
+  db:
+    build: .
+    image: postgres
+    environment:
+      POSTGRES_HOST: db
+    volumes:
+      - db-data:/var/lib/postgresql/db-data
+    ports:
+      - 5432
+
+  app:
+    build: .
+    command: 'bash -c ''bundle exec puma -C config/puma.rb'''
+    environment:
+      POSTGRES_HOST: db
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - db
+    ports:
+      - 3000
