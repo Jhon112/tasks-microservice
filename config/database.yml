@@ -21,7 +21,6 @@ default: &default
   timeout: 5000
   username: postgres
   password: jhon1234
-  host: db
 
 development:
   <<: *default
@@ -34,5 +33,4 @@ test:
 
 production:
   <<: *default
-  host: <%= ENV['POSTGRES_HOST'] %>
   database: tasks_microservice_production
